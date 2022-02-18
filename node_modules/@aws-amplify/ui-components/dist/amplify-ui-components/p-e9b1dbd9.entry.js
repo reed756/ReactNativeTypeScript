@@ -1,0 +1,1 @@
+import{r as e,h as t,H as n}from"./p-33b9aa6b.js";const s=class{constructor(t){e(this,t)}render(){return t(n,null,t("slot",null))}};s.style="amplify-container{display:-ms-flexbox;display:flex;-ms-flex-align:center;align-items:center;-ms-flex-pack:center;justify-content:center;height:100vh}";export{s as amplify_container}

@@ -1,0 +1,1 @@
+import{r as t,h as n,H as s}from"./p-33b9aa6b.js";const a=class{constructor(n){t(this,n)}render(){return n(s,null,n("form",{autoComplete:"on",hidden:!0},n("input",{name:"username"}),n("input",{name:"password",type:"password"}),n("input",{type:"submit"})),n("slot",null))}};export{a as amplify_auth_container}

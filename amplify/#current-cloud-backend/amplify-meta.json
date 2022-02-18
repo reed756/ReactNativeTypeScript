@@ -1,0 +1,56 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-auth-dev-100805-authRole",
+      "UnauthRoleArn": "arn:aws:iam::777600934257:role/amplify-auth-dev-100805-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::777600934257:role/amplify-auth-dev-100805-authRole",
+      "Region": "eu-west-2",
+      "DeploymentBucketName": "amplify-auth-dev-100805-deployment",
+      "UnauthRoleName": "amplify-auth-dev-100805-unauthRole",
+      "StackName": "amplify-auth-dev-100805",
+      "StackId": "arn:aws:cloudformation:eu-west-2:777600934257:stack/amplify-auth-dev-100805/aecd6200-90a2-11ec-b705-02b8b5d304e8",
+      "AmplifyAppId": "d20013fl9bva79"
+    }
+  },
+  "auth": {
+    "auth5211bdec": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [],
+        "usernameAttributes": [],
+        "signupAttributes": [
+          "EMAIL"
+        ],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-auth-dev-100805-deployment/amplify-cfn-templates/auth/auth5211bdec-cloudformation-template.json",
+        "logicalId": "authauth5211bdec"
+      },
+      "lastPushTimeStamp": "2022-02-18T10:18:41.603Z",
+      "output": {
+        "UserPoolId": "eu-west-2_anHhwMdNG",
+        "AppClientIDWeb": "6qac2tfmih11l7tp5bkfde645k",
+        "AppClientID": "4alq6tadtdcd7ovro59r4560mm",
+        "IdentityPoolId": "eu-west-2:f9f14f06-6be1-4ffd-aaed-0982f23fd809",
+        "UserPoolArn": "arn:aws:cognito-idp:eu-west-2:777600934257:userpool/eu-west-2_anHhwMdNG",
+        "IdentityPoolName": "auth5211bdec_identitypool_5211bdec__dev",
+        "UserPoolName": "auth5211bdec_userpool_5211bdec"
+      },
+      "lastPushDirHash": "YcJRUO6+O1FXpTWBLFu0kS8b6Dg="
+    }
+  }
+}
