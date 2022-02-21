@@ -10,6 +10,7 @@ import {
 import { Auth } from "aws-amplify";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
+import MapView, { Marker } from "react-native-maps";
 const { width } = Dimensions.get("window");
 
 const Home = () => {
@@ -21,6 +22,35 @@ const Home = () => {
     } catch (error) {
       console.log("error signing out: ", error);
     }
+  };
+  const venues = [
+    {
+      latitude: 51.5072,
+      longitude: 0.1276,
+      description: "Over here!",
+      title: "Hello",
+      image: "./assets/favicon.png",
+    },
+    {
+      latitude: 51.5073,
+      longitude: 0.1277,
+      description: "Over here!",
+      title: "Hello",
+      image: "./assets/favicon.png",
+    },
+    {
+      latitude: 51.5075,
+      longitude: 0.1278,
+      description: "Over here!",
+      title: "Hello",
+      image: "./assets/favicon.png",
+    },
+  ];
+  const londonRegion = {
+    latitude: 51.5072,
+    longitude: 0.1276,
+    latitudeDelta: 0.01,
+    longitudeDelta: 0.01,
   };
   return (
     <View style={styles.container}>
@@ -35,6 +65,21 @@ const Home = () => {
         title="log in test"
       />
       {signedIn && <Text>You are logged in</Text>}
+      <MapView style={styles.map} initialRegion={londonRegion}>
+        {venues.map((venue) => {
+          return (
+            <Marker
+              key={venue.latitude}
+              coordinate={{
+                latitude: venue.latitude,
+                longitude: venue.longitude,
+              }}
+              description={venue.description}
+              title={venue.title}
+            />
+          );
+        })}
+      </MapView>
     </View>
   );
 };
@@ -66,6 +111,10 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 18,
+  },
+  map: {
+    width: width,
+    height: 500,
   },
 });
 export default Home;
