@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 import { Auth } from "aws-amplify";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
 import MapView, { Marker } from "react-native-maps";
+import { getVenues } from "../utils/api";
 const { width } = Dimensions.get("window");
 const image = {
   uri: "https://cdn.pixabay.com/photo/2015/11/22/19/04/crowd-1056764_960_720.jpg",
@@ -19,40 +20,47 @@ const Home = () => {
       console.log("error signing out: ", error);
     }
   };
-  const venues = [
-    {
-      latitude: 51.5072,
-      longitude: 0.1276,
-      description: "Over here!",
-      title: "Hello",
-      image: "./assets/favicon.png",
-    },
-    {
-      latitude: 51.5073,
-      longitude: 0.1277,
-      description: "Over here!",
-      title: "Hello",
-      image: "./assets/favicon.png",
-    },
-    {
-      latitude: 51.5075,
-      longitude: 0.1278,
-      description: "Over here!",
-      title: "Hello",
-      image: "./assets/favicon.png",
-    },
-  ];
+  const [venues, setVenues] = useState([]);
+
+  useEffect(() => {
+    getVenues().then((res: any) => {
+      setVenues(res);
+    });
+  }, []);
+
+  // const venues = [
+  //   {
+  //     latitude: 51.5072,
+  //     longitude: 0.1276,
+  //     description: "Over here!",
+  //     title: "Hello",
+  //     image: "./assets/favicon.png",
+  //   },
+  //   {
+  //     latitude: 51.5073,
+  //     longitude: 0.1277,
+  //     description: "Over here!",
+  //     title: "Hello",
+  //     image: "./assets/favicon.png",
+  //   },
+  //   {
+  //     latitude: 51.5075,
+  //     longitude: 0.1278,
+  //     description: "Over here!",
+  //     title: "Hello",
+  //     image: "./assets/favicon.png",
+  //   },
+  // ];
   const londonRegion = {
-    latitude: 51.5072,
-    longitude: 0.1276,
+    latitude: 51.52297,
+    longitude: -0.15753,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   };
-
+  console.log(venues);
   const [user, setUser] = useState("");
 
   Auth.currentUserInfo().then((userInfo) => {
-    console.log(userInfo);
     setUser(userInfo.username);
   });
 
@@ -79,16 +87,16 @@ const Home = () => {
       /> 
       {signedIn && <Text>You are logged in</Text>}  */}
       <MapView style={styles.map} initialRegion={londonRegion}>
-        {venues.map((venue) => {
+        {venues.map((venue: any) => {
           return (
             <Marker
-              key={venue.latitude}
+              key={venue.id}
               coordinate={{
                 latitude: venue.latitude,
                 longitude: venue.longitude,
               }}
-              description={venue.description}
-              title={venue.title}
+              description={venue.area}
+              title={venue.name}
             />
           );
         })}
