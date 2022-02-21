@@ -1,17 +1,13 @@
-import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Pressable,
-  Dimensions,
-  Button,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 import { Auth } from "aws-amplify";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../reducers";
 import MapView, { Marker } from "react-native-maps";
 const { width } = Dimensions.get("window");
+const image = {
+  uri: "https://cdn.pixabay.com/photo/2015/11/22/19/04/crowd-1056764_960_720.jpg",
+};
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -52,19 +48,36 @@ const Home = () => {
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   };
+
+  const [user, setUser] = useState("");
+
+  Auth.currentUserInfo().then((userInfo) => {
+    console.log(userInfo);
+    setUser(userInfo.username);
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerText}>Welcome!</Text>
-        <Pressable style={styles.button} onPress={() => signOut()}>
+        <Text style={styles.headerText}>Herd</Text>
+        <Text style={styles.headerTextUser}>{user}</Text>
+        {/* <Text style={styles.headerText}>
+          {Auth.currentUserInfo().then((userInfo) => {
+            return userInfo.username[0]
+          })}
+        </Text> */}
+
+        {/* <Pressable style={styles.button} onPress={() => signOut()}>
           <Text style={styles.buttonText}>Sign out</Text>
-        </Pressable>
+        </Pressable>  */}
       </View>
+
+      {/*  
       <Button
         onPress={() => dispatch({ type: "SIGN_IN" })}
         title="log in test"
-      />
-      {signedIn && <Text>You are logged in</Text>}
+      /> 
+      {signedIn && <Text>You are logged in</Text>}  */}
       <MapView style={styles.map} initialRegion={londonRegion}>
         {venues.map((venue) => {
           return (
@@ -80,11 +93,51 @@ const Home = () => {
           );
         })}
       </MapView>
+      <View style={styles.mapButtons}>
+        <Text style={styles.ButtonText}>Filter</Text>
+      </View>
+      <View style={styles.footer}>
+        <Text style={styles.footerText}>Button</Text>
+        <Text style={styles.footerText}>Button</Text>
+        <Text style={styles.footerText}>Button</Text>
+      </View>
     </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#000",
+    alignItems: "center",
+    justifyContent: "center",
+    width: width,
+    paddingVertical: 20,
+  },
+  footer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 20,
+    paddingBottom: 50,
+    width: width,
+    alignItems: "center",
+  },
+  footerText: {
+    fontSize: 28,
+    fontWeight: "bold",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    color: "#fff",
+  },
+  ButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "white",
+    alignContent: "center",
+    alignSelf: "center",
+    justifyContent: "center",
+  },
+  imgBackground: {
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
@@ -100,8 +153,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerText: {
-    fontSize: 28,
+    fontSize: 25,
     fontWeight: "bold",
+    color: "#fff",
+  },
+  headerTextUser: {
+    fontSize: 15,
+    fontWeight: "bold",
+    color: "#fff",
   },
   button: {
     backgroundColor: "#FF9900",
@@ -111,10 +170,31 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "#fff",
     fontSize: 18,
+    opacity: 1,
+  },
+  mapButtons: {
+    position: "absolute",
+    top: "12%",
+
+    alignSelf: "flex-start",
+    borderRadius: 25,
+    borderTopRightRadius: 50,
+    borderBottomLeftRadius: 50,
+    height: 25,
+    width: 100,
+    backgroundColor: "grey",
+    opacity: 0.5,
+    color: "red",
+    borderColor: "red",
+    marginLeft: 10,
   },
   map: {
-    width: width,
-    height: 500,
+    width: width - 10,
+    height: 650,
+    borderTopRightRadius: 50,
+    borderRadius: 10,
+    borderColor: "#fff",
+    borderWidth: 2,
   },
 });
 export default Home;
