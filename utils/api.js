@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../config";
+import { API_TOKEN } from "@env";
 
 // const apiSecret = process.env.REACT_APP_SECRET_KEY;
 
@@ -8,9 +8,10 @@ const amazonApi = axios.create({
 });
 
 export const getVenues = () => {
+  console.log("here", API_TOKEN );
   return amazonApi
     .get("/get-venue-data", {
-      headers: { "X-API-KEY": config.API_TOKEN },
+      headers: { "X-API-KEY": API_TOKEN },
     })
     .then((res) => {
       console.log(res);
