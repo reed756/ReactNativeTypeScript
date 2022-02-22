@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   ButtonText: {
     fontSize: 18,
     fontWeight: "bold",
-    color: "white",
+    color: "black",
     alignContent: "center",
     alignSelf: "center",
     justifyContent: "center",
@@ -61,25 +61,17 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 6,
   },
-  buttonText: {
-    color: "#fff",
-    fontSize: 18,
-    opacity: 1,
-  },
   mapButtons: {
     position: "absolute",
-    top: "12%",
-
+    top: "1%",
     alignSelf: "flex-start",
-    borderRadius: 25,
+    borderRadius: 10,
+    borderWidth: 2,
     borderTopRightRadius: 50,
     borderBottomLeftRadius: 50,
     height: 25,
     width: 100,
-    backgroundColor: "grey",
-    opacity: 0.5,
-    color: "red",
-    borderColor: "red",
+    borderColor: "black",
     marginLeft: 10,
   },
   map: {
