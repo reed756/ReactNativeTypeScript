@@ -1,14 +1,18 @@
-import React from 'react';
+import React from "react";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
-import Map from './Map'
+import Map from "./Map";
+import Gig from "./Gig";
+import Venues from "./Venues";
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 
 const Home = () => {
   return (
-  <View style={styles.container}>
-    <Map/>
-  </View>
+    <View style={styles.container}>
+      <Map />
+      <Gig />
+      <Venues />
+    </View>
   );
 };
 
@@ -16,11 +20,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000",
     alignItems: "center",
-    justifyContent: "center",
     width: width,
     height: height,
     paddingVertical: 20,
   },
-})
+});
 
 export default Home;
