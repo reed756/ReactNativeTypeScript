@@ -75,8 +75,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   map: {
-    width: width - 10,
-    height: 650,
+    width: width - 20,
+    height: 440,
     borderTopRightRadius: 50,
     borderRadius: 10,
     borderColor: "#fff",

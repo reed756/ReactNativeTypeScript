@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
+
 const Header = () => {
   const [user, setUser] = useState("");
   const navigation = useNavigation();
@@ -18,9 +19,6 @@ const Header = () => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Herd</Text>
-        {/* <Text style={styles.headerTextUser} onPress={handleUserPress}>
-          {user}
-        </Text> */}
         <FontAwesome
           name="user-circle"
           size={30}
