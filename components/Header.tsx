@@ -2,19 +2,26 @@ import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
+import { useNavigation } from "@react-navigation/native";
+
 
 const Header = () => {
   const [user, setUser] = useState("");
-
+  const navigation = useNavigation();
   Auth.currentUserInfo().then((userInfo) => {
     setUser(userInfo.username);
   });
+  const handleUserPress = () => {
+    navigation.navigate("UserDetails");
+  };
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Herd</Text>
-        <Text style={styles.headerTextUser}>{user}</Text>
+        <Text style={styles.headerTextUser} onPress={handleUserPress}>
+          {user}
+        </Text>
       </View>
     </View>
   );
