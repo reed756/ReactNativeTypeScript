@@ -8,14 +8,26 @@ const amazonApi = axios.create({
 });
 
 export const getVenues = () => {
-  console.log("here", API_TOKEN );
   return amazonApi
-    .get("/get-venue-data", {
+    .get(`/get-venue-data`, {
+      headers: { "X-API-KEY": API_TOKEN },
+    })
+    .then((res) => {
+      return res.data.venue.Items;
+    })
+    .catch((err) => {
+      console.log(err, "error");
+    });
+};
+
+export const getGigs = () => {
+  return amazonApi
+    .get(`/get-gig-data`, {
       headers: { "X-API-KEY": API_TOKEN },
     })
     .then((res) => {
       console.log(res);
-      return res.data.venue.Items;
+      return res.data.gig.Items;
     })
     .catch((err) => {
       console.log(err, "error");
