@@ -8,17 +8,17 @@ import {
   Pressable,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { getGigs, getSingleGig, getVenues } from "../utils/api";
+import { getGigs, getVenues } from "../utils/api";
 import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
 
 const Map: FC = () => {
   const [venues, setVenues] = useState([]);
   const [gigs, setGigs] = useState([]);
-  const mapRef = useRef(null);
-  const navigation = useNavigation();
+  const mapRef: any = useRef(null);
+  const navigation: any = useNavigation();
 
-  const handleUserPress = (id) => {
+  const handleUserPress = (id: number) => {
     navigation.navigate("Gig", { id: id });
   };
 
@@ -58,7 +58,7 @@ const Map: FC = () => {
     longitudeDelta: 0.01,
   };
   const goToLondon = () => {
-    mapRef.current?.animateToRegion(londonRegion, 3 * 1000);
+    mapRef.current.animateToRegion(londonRegion, 3 * 1000);
   };
 
   const renderItem = ({ item }: { item: any }) => (
