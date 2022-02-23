@@ -82,7 +82,7 @@ const Map: FC = () => {
             })}
           </MapView>
           <View style={styles.mapButtons}>
-            <Text style={styles.ButtonText}>Filter</Text>
+            <Text style={styles.FilterButtonText}>Filter</Text>
           </View>
           <View>
             <Pressable style={styles.button} onPress={() => goToLondon()}>
@@ -98,6 +98,14 @@ const styles = StyleSheet.create({
   ButtonText: {
     fontSize: 18,
     fontWeight: "bold",
+    color: "white",
+    alignContent: "center",
+    alignSelf: "center",
+    justifyContent: "center",
+  },
+  FilterButtonText: {
+    fontSize: 18,
+    fontWeight: "bold",
     color: "black",
     alignContent: "center",
     alignSelf: "center",
@@ -110,7 +118,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    backgroundColor: "black",
+    // backgroundColor: "black",
   },
   mapButtons: {
     position: "absolute",
@@ -126,25 +134,31 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   map: {
-
-    width: width - 20,
+    width: width - 10,
     height: 440,
-
     borderTopRightRadius: 50,
     borderRadius: 10,
     borderColor: "#fff",
     borderWidth: 2,
     marginBottom: 10,
+    justifyContent: "center"
   },
   gigView: {
     width: width - 10,
     padding: 20,
-    backgroundColor: "grey",
-    borderRadius: 10,
+    backgroundColor: "black",
+    opacity: 0.75,
     marginTop: 10,
     marginBottom: 10,
     textAlign: "justify",
     elevation: 3,
+    borderColor: 'white',
+    borderWidth: 1,
+    borderRadius: 10,
+    shadowColor: "white",
+    shadowOffset: { width: 1, height: 0.1 },
+    shadowOpacity: 2,
+    shadowRadius: 8,
   },
   gigHeading: {
     color: "#fff",

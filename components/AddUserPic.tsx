@@ -14,30 +14,27 @@ import {
 } from "react-native";
 import { Avatar } from "react-native-elements";
 import { Input } from "react-native-elements/dist/input/Input";
-import { CognitoUserAttribute } from "amazon-cognito-identity-js";
+
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 const image = {
   uri: "https://cdn.pixabay.com/photo/2015/11/22/19/04/crowd-1056764_960_720.jpg",
 };
-const UserDetails = () => {
+const AddUserPic = () => {
   const navigation = useNavigation();
   const [user, setUser] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPhone, setUserPhone] = useState("");
-  const [userPhotoSubmit, setUserPhotoSubmit] = useState(
-    "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
+  const [userPhoto, setUserPhoto] = useState(
+    "https://st.depositphotos.com/1005730/3830/i/950/depositphotos_38302279-stock-photo-teenager-enjoying-listening-to-music.jpg",
   );
-  const [userPhoto, setUserPhoto] = useState(userPhotoSubmit);
   const [shouldShow, setShouldShow] = useState(false);
 
   Auth.currentUserInfo().then((userInfo) => {
-    console.log(userInfo.customAttributes);
     setUser(userInfo.username);
     setUserEmail(userInfo.attributes.email);
     setUserPhone(userInfo.attributes.phone_number);
   });
-
   const handleUserPress = () => {
     navigation.navigate("Home");
   };
@@ -45,9 +42,7 @@ const UserDetails = () => {
   const handleLogOutPressed = () => {
     Auth.signOut();
   };
-  const handleUserPhoto = () => {
-    setUserPhoto(userPhotoSubmit);
-  };
+  const handleUserPic = () => {};
 
   return (
     <ImageBackground source={image} style={styles.imgBackground}>
@@ -70,6 +65,7 @@ const UserDetails = () => {
             borderWidth: 1,
           }}
           source={{ uri: userPhoto }}
+          avatarStyle={styles.userPic}
         ></Avatar>
         <View style={styles.AddPic}>
           <Text
@@ -80,18 +76,11 @@ const UserDetails = () => {
           </Text>
         </View>
         {shouldShow ? (
-          <View style={styles.inputContainer}>
-            <Input
-              style={styles.input}
-              placeholder="Enter Image URI"
-              onChangeText={(newPhoto) => setUserPhotoSubmit(newPhoto)}
-            ></Input>
-            <View style={styles.submit}>
-              <Text onPress={handleUserPhoto}>
-                {console.log(userPhoto)}Submit
-              </Text>
-            </View>
-          </View>
+          <Input
+            style={styles.input}
+            placeholder="Enter Image URI"
+            
+          ></Input>
         ) : null}
 
         <View style={styles.userInfo}>
@@ -113,21 +102,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     alignItems: "center",
     borderRadius: 25,
-    height: 580,
+    height: 550,
     width: 340,
     position: "absolute",
     opacity: 0.85,
     borderColor: "white",
-    alignSelf: "center",
     borderWidth: 2,
-  },
-  submit: {
-    height: 30,
-    width: 100,
-    backgroundColor: "white",
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 10,
   },
   username: {
     fontSize: 20,
@@ -151,10 +131,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     margin: "auto",
+    height: 20,
     fontWeight: "bold",
   },
   user: {
-    marginTop: 20,
+    marginTop: 50,
     height: 60,
     width: 200,
     alignItems: "center",
@@ -167,7 +148,7 @@ const styles = StyleSheet.create({
   },
 
   Log: {
-    marginTop: 500,
+    marginTop: 60,
     paddingVertical: 15,
     height: 50,
     width: 100,
@@ -175,7 +156,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     alignContent: "center",
-    position: "absolute",
   },
   BackButton: {
     height: 50,
@@ -186,17 +166,28 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
     borderColor: "white",
     borderWidth: 1,
+    alignContent: "center",
     justifyContent: "center",
+    alignSelf: "center",
   },
   BackButtonText: {
     color: "white",
+    alignContent: "center",
+    justifyContent: "center",
     alignSelf: "center",
     fontWeight: "bold",
   },
   userInfo: {
+    // marginTop: 20,
     backgroundColor: "#000",
     alignItems: "center",
+    alignContent: "center",
     borderRadius: 25,
+    justifyContent: "space-around",
+  },
+  userPic: {
+    alignItems: "center",
+    alignContent: "center",
   },
   AddPic: {
     marginTop: 20,
@@ -207,11 +198,15 @@ const styles = StyleSheet.create({
     borderRadius: 80,
     backgroundColor: "#fff",
     alignItems: "center",
+    alignContent: "center",
     justifyContent: "center",
   },
   AddPicText: {
     color: "black",
     fontWeight: "bold",
+    alignItems: "center",
+    alignContent: "center",
+    justifyContent: "center",
     height: 17,
   },
   input: {
@@ -225,14 +220,6 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     textAlign: "center",
   },
-  inputContainer: {
-    marginTop: 20,
-    margin: 10,
-    width: 300,
-    alignContent: "center",
-    alignItems: "center",
-    justifyContent: "center",
-  },
 });
 
-export default UserDetails;
+export default AddUserPic;
