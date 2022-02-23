@@ -26,8 +26,20 @@ export const getGigs = () => {
       headers: { "X-API-KEY": API_TOKEN },
     })
     .then((res) => {
-      console.log(res);
       return res.data.gig.Items;
+    })
+    .catch((err) => {
+      console.log(err, "error");
+    });
+};
+
+export const getSingleGig = (id) => {
+  return amazonApi
+    .get(`/get-gig-data/${id}`, {
+      headers: { "X-API-KEY": API_TOKEN },
+    })
+    .then((res) => {
+      return res.data.gig;
     })
     .catch((err) => {
       console.log(err, "error");

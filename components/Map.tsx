@@ -8,29 +8,39 @@ import {
   Pressable,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { getGigs, getVenues } from "../utils/api";
+import { getGigs, getSingleGig, getVenues } from "../utils/api";
+import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
-
-const Item = ({
-  bandName,
-  genre,
-  description,
-}: {
-  bandName: string;
-  genre: string;
-  description: string;
-}) => (
-  <View style={styles.gigView}>
-    <Text style={styles.gigHeading}>{bandName}</Text>
-    <Text style={styles.gigText}>{description}</Text>
-    <Text style={styles.gigText}>{genre}</Text>
-  </View>
-);
 
 const Map: FC = () => {
   const [venues, setVenues] = useState([]);
   const [gigs, setGigs] = useState([]);
   const mapRef = useRef(null);
+  const navigation = useNavigation();
+
+  const handleUserPress = (id) => {
+    navigation.navigate("Gig", { id: id });
+  };
+
+  const Item = ({
+    bandName,
+    genre,
+    description,
+    id,
+  }: {
+    bandName: string;
+    genre: string;
+    description: string;
+    id: number;
+  }) => (
+    <View style={styles.gigView}>
+      <Pressable onPress={() => handleUserPress(id)}>
+        <Text style={styles.gigHeading}>{bandName}</Text>
+        <Text style={styles.gigText}>{description}</Text>
+        <Text style={styles.gigText}>{genre}</Text>
+      </Pressable>
+    </View>
+  );
 
   useEffect(() => {
     getVenues().then((res: any) => {
@@ -56,6 +66,7 @@ const Map: FC = () => {
       bandName={item.bandName}
       description={item.description}
       genre={item.genre}
+      id={item.id}
     />
   );
 
@@ -86,8 +97,11 @@ const Map: FC = () => {
           </View>
           <View>
             <Pressable style={styles.button} onPress={() => goToLondon()}>
-              <Text style={styles.ButtonText}>Back to Home</Text>
+              <Text style={styles.gigText}>Back to Home</Text>
             </Pressable>
+          </View>
+          <View>
+            <Text style={styles.gigHeading}>UPCOMING GIGS:</Text>
           </View>
         </>
       }
@@ -114,7 +128,7 @@ const styles = StyleSheet.create({
   },
   mapButtons: {
     position: "absolute",
-    top: "1%",
+    top: "3%",
     alignSelf: "flex-start",
     borderRadius: 10,
     borderWidth: 2,
@@ -126,10 +140,8 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   map: {
-
     width: width - 20,
     height: 440,
-
     borderTopRightRadius: 50,
     borderRadius: 10,
     borderColor: "#fff",
@@ -137,7 +149,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   gigView: {
-    width: width - 10,
+    width: width - 20,
     padding: 20,
     backgroundColor: "grey",
     borderRadius: 10,

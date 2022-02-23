@@ -13,6 +13,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./components/Home";
 import Header from "./components/Header";
 import UserDetails from "./components/UserDetails";
+import Gig from "./components/Gig";
 
 const store = createStore(allReducers);
 Amplify.configure({
@@ -32,6 +33,7 @@ function App() {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="UserDetails" component={UserDetails} />
+          <Stack.Screen name="Gig" component={Gig} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
