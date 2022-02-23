@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React from "react";
-import { StyleSheet} from "react-native";
+import { StyleSheet } from "react-native";
 import Amplify from "aws-amplify";
 import config from "./src/aws-exports";
 // @ts-ignore
@@ -8,10 +8,11 @@ import { withAuthenticator } from "aws-amplify-react-native";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { allReducers } from "./reducers";
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Home from "./components/Home";
-import Header from './components/Header';
+import Header from "./components/Header";
+import UserDetails from "./components/UserDetails";
 
 const store = createStore(allReducers);
 Amplify.configure({
@@ -27,13 +28,12 @@ function App() {
   return (
     <Provider store={store}>
       <StatusBar style="auto" />
-      <Header/>
       <NavigationContainer>
-        <Stack.Navigator screenOptions={{headerShown: false}}>
-          
+        <Stack.Navigator screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="UserDetails" component={UserDetails} />
         </Stack.Navigator>
-    </NavigationContainer>
+      </NavigationContainer>
     </Provider>
   );
 }
