@@ -12,7 +12,7 @@ const Home = () => {
     <View style={styles.container}>
       <Header></Header>
       <Map />
-      <Gig />
+      {/* <Gig /> */}
       <Venues />
     </View>
   );
