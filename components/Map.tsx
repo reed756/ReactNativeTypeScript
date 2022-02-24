@@ -6,8 +6,10 @@ import {
   Dimensions,
   FlatList,
   Pressable,
+  Image,
+  Linking,
 } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Callout, Marker } from "react-native-maps";
 import { getVenues, getGigsByVenue, getGigs } from "../utils/api";
 import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
@@ -22,6 +24,9 @@ const Map: FC = () => {
   const handleUserPress = (id: number) => {
     navigation.navigate("Gig", { id: id });
   };
+  const image = {
+    uri: "https://www.pinpng.com/pngs/m/1-19405_hand-with-white-outline-forming-a-rock-on.png",
+  };
 
   const Item = ({
     bandName,
@@ -29,16 +34,21 @@ const Map: FC = () => {
     description,
     id,
     date,
+    small_url,
+    big_url,
   }: {
     bandName: string;
     genre: string;
     description: string;
     id: number;
     date: string;
+    small_url: string;
+    big_url: string;
   }) => (
     <View style={styles.gigView}>
       <Pressable onPress={() => handleUserPress(id)}>
         <Text style={styles.gigHeading}>{bandName}</Text>
+        <Image source={{ uri: small_url }} style={styles.smallUrlPic}></Image>
         <Text style={styles.gigText}>{description}</Text>
         <Text style={styles.gigText}>{genre}</Text>
         <Text style={styles.gigText}>{date}</Text>
@@ -75,6 +85,8 @@ const Map: FC = () => {
       genre={item.genre}
       id={item.id}
       date={item.date}
+      small_url={item.small_url}
+      big_url={item.big_url}
     />
   );
 
@@ -94,10 +106,26 @@ const Map: FC = () => {
                     latitude: venue.latitude,
                     longitude: venue.longitude,
                   }}
-                  description={venue.area}
-                  title={venue.name}
                   onPress={() => setVenueId(venue.id)}
-                />
+                >
+                  <Image
+                    style={styles.marker}
+                    source={{
+                      uri: "https://www.pinpng.com/pngs/m/1-19405_hand-with-white-outline-forming-a-rock-on.png",
+                    }}
+                  ></Image>
+                  <Callout>
+                    <Text style={styles.venName}>{venue.name}</Text>
+                    <Text
+                      style={styles.venPhone}
+                      onPress={() => Linking.openURL(`tel:${venue.phone}`)}
+                    >
+                      {venue.phone}
+                    </Text>
+                    <Text>{venue.address}</Text>
+                    <Text>Opens: {venue.opens}</Text>
+                  </Callout>
+                </Marker>
               );
             })}
           </MapView>
@@ -129,6 +157,12 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
   },
+  venName: {
+    fontWeight: "bold",
+  },
+  venPhone: {
+    fontStyle: "italic",
+  },
   FilterButtonText: {
     fontSize: 18,
     fontWeight: "bold",
@@ -144,7 +178,11 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 3,
-    // backgroundColor: "black",
+  },
+  marker: {
+    height: 50,
+    width: 50,
+    borderRadius: 20,
   },
   mapButtons: {
     position: "absolute",
@@ -152,8 +190,8 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     borderRadius: 10,
     borderWidth: 2,
-    borderTopRightRadius: 50,
-    borderBottomLeftRadius: 50,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
     height: 25,
     width: 100,
     borderColor: "black",
@@ -199,6 +237,12 @@ const styles = StyleSheet.create({
     fontSize: 18,
     opacity: 1,
     margin: 5,
+  },
+  smallUrlPic: {
+    height: 100,
+    width: 100,
+    borderRadius: 15,
+    alignSelf: "center",
   },
 });
 

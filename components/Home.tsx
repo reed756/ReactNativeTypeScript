@@ -10,6 +10,7 @@ import Map from "./Map";
 import Gig from "./Gig";
 import Venues from "./Venues";
 import Header from "./Header";
+import Search from "./search";
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 const image = {
@@ -21,6 +22,7 @@ const Home = () => {
     <ImageBackground source={image} style={styles.imgBackground}>
       <View style={styles.container}>
         <Header></Header>
+        <Search></Search>
         <Map />
         <Venues />
       </View>

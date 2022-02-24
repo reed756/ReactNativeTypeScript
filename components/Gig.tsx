@@ -6,6 +6,7 @@ import {
   ImageBackground,
   Dimensions,
   Linking,
+  Image,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getSingleGig } from "../utils/api";
@@ -31,6 +32,8 @@ const Gig: FC<Props> = ({ route }) => {
     end: "",
     price: 0,
     spotify: "",
+    big_url: "www.image.com",
+    small_url: "",
   });
   useEffect(() => {
     getSingleGig(id).then((res) => {
@@ -49,6 +52,7 @@ const Gig: FC<Props> = ({ route }) => {
       </View>
       <View style={styles.container}>
         <Text style={styles.GigTitle}>{gig.bandName}</Text>
+        <Image source={{ uri: gig.big_url }} style={styles.bigImg}></Image>
         <Text style={styles.GigText}>{gig.date}</Text>
         <Text style={styles.GigText}>{gig.description}</Text>
         <Text style={styles.GigText}>{gig.genre}</Text>
@@ -73,7 +77,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     alignItems: "center",
     borderRadius: 25,
-    height: 550,
+    height: 600,
     width: 340,
     position: "absolute",
     opacity: 0.85,
@@ -115,6 +119,13 @@ const styles = StyleSheet.create({
     color: "#fff",
     padding: 10,
     fontWeight: "bold",
+  },
+
+  bigImg: {
+    marginTop: 10,
+    height: 200,
+    width: 200,
+    borderRadius: 15
   },
 });
 
