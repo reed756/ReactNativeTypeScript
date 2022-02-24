@@ -18,6 +18,7 @@ const image = {
 
 const Home = () => {
   return (
+
     <ImageBackground source={image} style={styles.imgBackground}>
       <View style={styles.container}>
         <Header></Header>
@@ -26,6 +27,14 @@ const Home = () => {
         <Venues />
       </View>
     </ImageBackground>
+
+    <View style={styles.container}>
+      <Header></Header>
+      <Map />
+      {/* <Gig /> */}
+      <Venues />
+    </View>
+
   );
 };
 

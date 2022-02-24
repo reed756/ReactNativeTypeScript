@@ -42,7 +42,6 @@ const styles = StyleSheet.create({
   icon: {
     justifyContent: "center",
     alignContent: "center",
-    // margin: 50,
   },
   header: {
     display: "flex",
