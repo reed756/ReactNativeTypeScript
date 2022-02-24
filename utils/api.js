@@ -4,7 +4,7 @@ import { API_TOKEN } from "@env";
 // const apiSecret = process.env.REACT_APP_SECRET_KEY;
 
 const amazonApi = axios.create({
-  baseURL: "https://14mh5mrgzl.execute-api.eu-west-2.amazonaws.com/dev",
+  baseURL: "https://9nqt242jla.execute-api.eu-west-2.amazonaws.com/dev",
 });
 
 export const getVenues = () => {
@@ -26,7 +26,6 @@ export const getGigs = () => {
       headers: { "X-API-KEY": API_TOKEN },
     })
     .then((res) => {
-
       return res.data.gig.Items;
     })
     .catch((err) => {

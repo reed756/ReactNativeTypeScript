@@ -18,23 +18,13 @@ const image = {
 
 const Home = () => {
   return (
-
     <ImageBackground source={image} style={styles.imgBackground}>
       <View style={styles.container}>
         <Header></Header>
         <Map />
-        <Gig />
         <Venues />
       </View>
     </ImageBackground>
-
-    <View style={styles.container}>
-      <Header></Header>
-      <Map />
-      {/* <Gig /> */}
-      <Venues />
-    </View>
-
   );
 };
 
