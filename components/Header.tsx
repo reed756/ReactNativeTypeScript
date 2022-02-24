@@ -32,7 +32,7 @@ const Header = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "#000",
+    // backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
     width: width,

@@ -16,7 +16,7 @@ export const getVenues = () => {
       return res.data.venue.Items;
     })
     .catch((err) => {
-      console.log(err, "error");
+      // console.log(err, "error");
     });
 };
 
@@ -26,10 +26,11 @@ export const getGigs = () => {
       headers: { "X-API-KEY": API_TOKEN },
     })
     .then((res) => {
+
       return res.data.gig.Items;
     })
     .catch((err) => {
-      console.log(err, "error");
+      // console.log(err, "error");
     });
 };
 
