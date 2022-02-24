@@ -8,13 +8,14 @@ import {
   Pressable,
 } from "react-native";
 import MapView, { Marker } from "react-native-maps";
-import { getGigs, getVenues } from "../utils/api";
+import { getVenues, getGigsByVenue, getGigs } from "../utils/api";
 import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
 
 const Map: FC = () => {
   const [venues, setVenues] = useState([]);
   const [gigs, setGigs] = useState([]);
+  const [venueId, setVenueId] = useState(11);
   const mapRef: any = useRef(null);
   const navigation: any = useNavigation();
 
@@ -27,17 +28,20 @@ const Map: FC = () => {
     genre,
     description,
     id,
+    date,
   }: {
     bandName: string;
     genre: string;
     description: string;
     id: number;
+    date: string;
   }) => (
     <View style={styles.gigView}>
       <Pressable onPress={() => handleUserPress(id)}>
         <Text style={styles.gigHeading}>{bandName}</Text>
         <Text style={styles.gigText}>{description}</Text>
         <Text style={styles.gigText}>{genre}</Text>
+        <Text style={styles.gigText}>{date}</Text>
       </Pressable>
     </View>
   );
@@ -46,14 +50,17 @@ const Map: FC = () => {
     getVenues().then((res: any) => {
       setVenues(res);
     });
-    getGigs().then((res: any) => {
+    getGigsByVenue(venueId).then((res: any) => {
       setGigs(res);
     });
-  }, []);
+    getGigs().then((res: any) => {
+      console.log(res);
+    });
+  }, [venueId]);
 
   const londonRegion = {
-    latitude: 51.52297,
-    longitude: -0.15753,
+    latitude: 51.49307,
+    longitude: -0.22559,
     latitudeDelta: 0.01,
     longitudeDelta: 0.01,
   };
@@ -67,6 +74,7 @@ const Map: FC = () => {
       description={item.description}
       genre={item.genre}
       id={item.id}
+      date={item.date}
     />
   );
 
@@ -88,6 +96,7 @@ const Map: FC = () => {
                   }}
                   description={venue.area}
                   title={venue.name}
+                  onPress={() => setVenueId(venue.id)}
                 />
               );
             })}
@@ -97,7 +106,10 @@ const Map: FC = () => {
           </View>
           <View>
             <Pressable style={styles.button} onPress={() => goToLondon()}>
-              <Text style={styles.gigText}>Back to Home</Text>
+              <Text style={styles.gigText}>Re-center</Text>
+            </Pressable>
+            <Pressable style={styles.button}>
+              <Text style={styles.gigText}>Add gig</Text>
             </Pressable>
           </View>
           <View>
@@ -148,7 +160,6 @@ const styles = StyleSheet.create({
     marginLeft: 10,
   },
   map: {
-
     width: width - 20,
 
     height: 440,
@@ -157,7 +168,7 @@ const styles = StyleSheet.create({
     borderColor: "#fff",
     borderWidth: 2,
     marginBottom: 10,
-    justifyContent: "center"
+    justifyContent: "center",
   },
   gigView: {
     width: width - 20,
@@ -168,7 +179,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     textAlign: "justify",
     elevation: 3,
-    borderColor: 'white',
+    borderColor: "white",
     borderWidth: 1,
     borderRadius: 10,
     shadowColor: "white",
