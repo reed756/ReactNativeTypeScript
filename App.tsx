@@ -14,6 +14,7 @@ import Home from "./components/Home";
 import Header from "./components/Header";
 import UserDetails from "./components/UserDetails";
 import AddUserPic from "./components/AddUserPic";
+import AddGig from "./components/AddGig";
 import Gig from "./components/Gig";
 
 const store = createStore(allReducers);
@@ -39,6 +40,7 @@ function App() {
 
           <Stack.Screen name="Gig" component={Gig} />
 
+          <Stack.Screen name="AddGig" component={AddGig} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>

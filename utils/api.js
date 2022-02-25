@@ -58,3 +58,32 @@ export const getGigsByVenue = (venue_id) => {
       // console.log(err, "error");
     });
 };
+
+export const postGig = (id, body) => {
+  return amazonApi
+    .post(
+      `/create-gig-data/${id}`,
+      {
+        bandName: body.bandName,
+        big_url: body.big_url,
+        date: body.date,
+        description: body.description,
+        end: body.end,
+        genre: body.genre,
+        price: body.price,
+        small_url: body.small_url,
+        spotify: body.spotify,
+        start: body.start,
+        venue_id: body.venue_id,
+      },
+      {
+        headers: { "X-API-KEY": API_TOKEN },
+      },
+    )
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
