@@ -1,4 +1,6 @@
-import React, { useState, FC } from "react";
+import React, { useState, useEffect, FC } from "react";
+import { v4 as uuidv4 } from "uuid";
+import "react-native-get-random-values";
 import {
   StyleSheet,
   Text,
@@ -11,7 +13,6 @@ import {
   Button,
 } from "react-native";
 import { useForm, useController } from "react-hook-form";
-// import { Input } from "react-native-elements/dist/input/Input";
 import { useNavigation } from "@react-navigation/native";
 import { postGig } from "../utils/api";
 const { width } = Dimensions.get("window");
@@ -19,15 +20,12 @@ const { height } = Dimensions.get("window");
 const image = {
   uri: "https://cdn.pixabay.com/photo/2015/11/22/19/04/crowd-1056764_960_720.jpg",
 };
-
 interface Props {}
-
 function Input({ name, control }: { name: any; control: any }) {
   const { field } = useController({
     control,
     name,
   });
-
   return (
     <TextInput
       style={styles.input}
@@ -55,7 +53,7 @@ const AddGig: FC<Props> = ({ route }) => {
     start: "",
     venue_id: venue_id,
   });
-
+  const [inputGig, setInputGig] = useState({});
   const { control, handleSubmit } = useForm();
   const onSubmit = (data: any) => {
     setNewGig(data);
@@ -63,13 +61,20 @@ const AddGig: FC<Props> = ({ route }) => {
       ...prevState,
       venue_id: venue_id,
     }));
-    Alert.alert("Form Submitted!", JSON.stringify(data), [{ text: "OK" }]);
-    postGig(86, newGig)
+    setInputGig(newGig);
+    Alert.alert(
+      "Form Submitted!",
+      "The gig was successfully added to the database",
+      [{ text: "OK" }],
+    );
+  };
+  useEffect(() => {
+    postGig(uuidv4(), newGig)
       .then((res) => {
         console.log(res);
       })
       .catch((err) => console.log(err));
-  };
+  }, [inputGig]);
   const navigation = useNavigation();
   const handleUserPress = () => {
     navigation.navigate("Home");
@@ -109,7 +114,6 @@ const AddGig: FC<Props> = ({ route }) => {
     </ImageBackground>
   );
 };
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#000",
@@ -177,5 +181,4 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 });
-
 export default AddGig;
