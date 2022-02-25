@@ -139,7 +139,16 @@ const Map: FC = () => {
               <Text style={styles.gigText}>Re-center</Text>
             </Pressable>
             <Pressable style={styles.button}>
-              <Text style={styles.gigText}>Add gig</Text>
+              <Text
+                style={styles.gigText}
+                onPress={() =>
+                  navigation.navigate("AddGig", {
+                    venue_id: venueId,
+                  })
+                }
+              >
+                Add gig
+              </Text>
             </Pressable>
           </View>
           <View>
