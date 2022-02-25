@@ -7,12 +7,14 @@ import {
   FlatList,
   Pressable,
   Image,
+  Button,
   Linking,
 } from "react-native";
 import MapView, { Callout, Marker } from "react-native-maps";
 import { getVenues, getGigsByVenue, getGigs } from "../utils/api";
 import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
+import { Input } from "react-native-elements";
 
 const Map: FC = () => {
   const [venues, setVenues] = useState([]);
@@ -25,9 +27,8 @@ const Map: FC = () => {
   const handleUserPress = (id: number) => {
     navigation.navigate("Gig", { id: id });
   };
-  const image = {
-    uri: "https://www.pinpng.com/pngs/m/1-19405_hand-with-white-outline-forming-a-rock-on.png",
-  };
+
+  const [shouldShow, setShouldShow] = useState(false);
 
   const Item = ({
     bandName,
@@ -131,12 +132,15 @@ const Map: FC = () => {
               );
             })}
           </MapView>
-          <View style={styles.mapButtons}>
-            <Text style={styles.FilterButtonText}>Filter</Text>
-          </View>
           <View style={styles.buttonContainer}>
             <Pressable style={styles.button} onPress={() => goToLondon()}>
               <Text style={styles.gigText}>Re-center</Text>
+            </Pressable>
+            <Pressable
+              style={styles.button}
+              onPress={() => navigation.navigate("Filter")}
+            >
+              <Text style={styles.gigText}>Filter</Text>
             </Pressable>
             <Pressable
               disabled={!currVenue ? true : false}
@@ -154,6 +158,11 @@ const Map: FC = () => {
             <Text style={styles.gigHeading}>UPCOMING GIGS:</Text>
             <Text style={styles.gigHeading}>{currVenue}</Text>
           </View>
+          {shouldShow ? (
+            <View style={styles.mapButtonsFilter}>
+              <Text onPress={() => navigation.navigate("Filter")}>Rock</Text>
+            </View>
+          ) : null}
         </>
       }
     />
@@ -202,7 +211,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 5,
-    paddingHorizontal: 32,
+    paddingHorizontal: 20,
     borderRadius: 20,
     elevation: 3,
     borderColor: "white",
@@ -224,6 +233,19 @@ const styles = StyleSheet.create({
   mapButtons: {
     position: "absolute",
     top: "3%",
+    alignSelf: "flex-start",
+    borderRadius: 10,
+    borderWidth: 2,
+    borderTopRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    height: 25,
+    width: 100,
+    borderColor: "black",
+    marginLeft: 10,
+  },
+  mapButtonsFilter: {
+    position: "absolute",
+    top: "10%",
     alignSelf: "flex-start",
     borderRadius: 10,
     borderWidth: 2,

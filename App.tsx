@@ -16,6 +16,7 @@ import UserDetails from "./components/UserDetails";
 import AddUserPic from "./components/AddUserPic";
 import AddGig from "./components/AddGig";
 import Gig from "./components/Gig";
+import Filter from "./components/Filter";
 
 const store = createStore(allReducers);
 Amplify.configure({
@@ -41,6 +42,8 @@ function App() {
           <Stack.Screen name="Gig" component={Gig} />
 
           <Stack.Screen name="AddGig" component={AddGig} />
+
+          <Stack.Screen name="Filter" component={Filter} />
         </Stack.Navigator>
       </NavigationContainer>
     </Provider>
