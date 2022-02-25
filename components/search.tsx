@@ -22,17 +22,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: "white",
     borderRadius: 20,
-    marginBottom: 0,
-    alignContent: "center",
-    justifyContent: "center",
     textAlign: "center",
+    borderColor: "white",
+    
   },
   searchContainer: {
-    width: width - 20,
-    alignContent: "center",
+    marginTop: 5,
+    width: width - 30,
+    // alignContent: "center",
     justifyContent: "center",
-    alignItems: "center",
-    height: 40,
-  },
+    // alignItems: "center",
+    height: 25,
+  }
 });
 export default Search;
