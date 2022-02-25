@@ -88,7 +88,7 @@ const UserDetails = () => {
             ></Input>
             <View style={styles.submit}>
               <Text onPress={handleUserPhoto}>
-                {console.log(userPhoto)}Submit
+                Submit
               </Text>
             </View>
           </View>

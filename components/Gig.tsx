@@ -56,8 +56,7 @@ const Gig: FC<Props> = ({ route }) => {
         <Text style={styles.GigText}>{gig.date}</Text>
         <Text style={styles.GigText}>{gig.description}</Text>
         <Text style={styles.GigText}>{gig.genre}</Text>
-        <Text style={styles.GigText}>{gig.start}PM</Text>
-        <Text style={styles.GigText}>{gig.end}PM</Text>
+        <Text style={styles.GigText}>{gig.start}PM - {gig.end}PM</Text>
         <Text style={styles.GigText}>£{gig.price}</Text>
         <FontAwesome
           name="spotify"
@@ -114,6 +113,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#fff",
+    marginTop: 10
   },
   GigText: {
     color: "#fff",

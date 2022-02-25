@@ -20,6 +20,7 @@ const Map: FC = () => {
   const [venueId, setVenueId] = useState(11);
   const mapRef: any = useRef(null);
   const navigation: any = useNavigation();
+  const [currVenue, setCurrVenue] = useState("");
 
   const handleUserPress = (id: number) => {
     navigation.navigate("Gig", { id: id });
@@ -106,15 +107,16 @@ const Map: FC = () => {
                     latitude: venue.latitude,
                     longitude: venue.longitude,
                   }}
-                  onPress={() => setVenueId(venue.id)}
+                  onPress={() => {
+                    setVenueId(venue.id);
+                    setCurrVenue(venue.name);
+                  }}
                 >
                   <Image
                     style={styles.marker}
-                    source={{
-                      uri: "https://www.pinpng.com/pngs/m/1-19405_hand-with-white-outline-forming-a-rock-on.png",
-                    }}
+                    source={require("../images/guitar-icon.png")}
                   ></Image>
-                  <Callout>
+                  <Callout style={styles.callout}>
                     <Text style={styles.venName}>{venue.name}</Text>
                     <Text
                       style={styles.venPhone}
@@ -132,7 +134,7 @@ const Map: FC = () => {
           <View style={styles.mapButtons}>
             <Text style={styles.FilterButtonText}>Filter</Text>
           </View>
-          <View>
+          <View style={styles.buttonContainer}>
             <Pressable style={styles.button} onPress={() => goToLondon()}>
               <Text style={styles.gigText}>Re-center</Text>
             </Pressable>
@@ -142,6 +144,7 @@ const Map: FC = () => {
           </View>
           <View>
             <Text style={styles.gigHeading}>UPCOMING GIGS:</Text>
+            <Text style={styles.gigHeading}>{currVenue}</Text>
           </View>
         </>
       }
@@ -163,6 +166,11 @@ const styles = StyleSheet.create({
   venPhone: {
     fontStyle: "italic",
   },
+  callout: {
+    // position: "relative"
+    flex: 1,
+    width: width - 150,
+  },
   FilterButtonText: {
     fontSize: 18,
     fontWeight: "bold",
@@ -174,15 +182,25 @@ const styles = StyleSheet.create({
   button: {
     alignItems: "center",
     justifyContent: "center",
-    paddingVertical: 12,
+    paddingVertical: 5,
     paddingHorizontal: 32,
-    borderRadius: 4,
+    borderRadius: 20,
     elevation: 3,
+    borderColor: "white",
+    borderWidth: 1,
+    backgroundColor: "black",
+  },
+  buttonContainer: {
+    justifyContent: "space-between",
+    display: "flex",
+    // borderWidth: 1,
+    alignItems: "center",
+    flexDirection: "row",
   },
   marker: {
     height: 50,
     width: 50,
-    borderRadius: 20,
+    // borderRadius: 20,
   },
   mapButtons: {
     position: "absolute",
@@ -231,12 +249,13 @@ const styles = StyleSheet.create({
     opacity: 1,
     margin: 5,
     fontWeight: "900",
+    alignSelf: "center",
   },
   gigText: {
     color: "#fff",
     fontSize: 18,
     opacity: 1,
-    margin: 5,
+    fontWeight: "bold",
   },
   smallUrlPic: {
     height: 100,
