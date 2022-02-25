@@ -138,17 +138,16 @@ const Map: FC = () => {
             <Pressable style={styles.button} onPress={() => goToLondon()}>
               <Text style={styles.gigText}>Re-center</Text>
             </Pressable>
-            <Pressable style={styles.button}>
-              <Text
-                style={styles.gigText}
-                onPress={() =>
-                  navigation.navigate("AddGig", {
-                    venue_id: venueId,
-                  })
-                }
-              >
-                Add gig
-              </Text>
+            <Pressable
+              disabled={!currVenue ? true : false}
+              style={!currVenue ? styles.disabledButton : styles.button}
+              onPress={() =>
+                navigation.navigate("AddGig", {
+                  venue_id: venueId,
+                })
+              }
+            >
+              <Text style={styles.gigText}>Add gig</Text>
             </Pressable>
           </View>
           <View>
@@ -187,6 +186,17 @@ const styles = StyleSheet.create({
     alignContent: "center",
     alignSelf: "center",
     justifyContent: "center",
+  },
+  disabledButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 32,
+    borderRadius: 20,
+    elevation: 3,
+    borderColor: "white",
+    borderWidth: 1,
+    backgroundColor: "grey",
   },
   button: {
     alignItems: "center",

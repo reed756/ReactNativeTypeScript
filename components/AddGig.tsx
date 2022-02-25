@@ -55,11 +55,14 @@ const AddGig: FC<Props> = ({ route }) => {
     start: "",
     venue_id: venue_id,
   });
-  //   const { venue_id } = route.params;
+
   const { control, handleSubmit } = useForm();
   const onSubmit = (data: any) => {
     setNewGig(data);
-    setNewGig((newGig.venue_id = venue_id));
+    setNewGig((prevState) => ({
+      ...prevState,
+      venue_id: venue_id,
+    }));
     Alert.alert("Form Submitted!", JSON.stringify(data), [{ text: "OK" }]);
     postGig(86, newGig)
       .then((res) => {
@@ -67,7 +70,6 @@ const AddGig: FC<Props> = ({ route }) => {
       })
       .catch((err) => console.log(err));
   };
-  //   const {} = props;
   const navigation = useNavigation();
   const handleUserPress = () => {
     navigation.navigate("Home");
@@ -100,8 +102,6 @@ const AddGig: FC<Props> = ({ route }) => {
         <Input name="spotify" control={control} />
         <Text style={styles.formText}>Price of gig: </Text>
         <Input name="price" control={control} />
-        {/* <Text style={styles.formText}>Venue: </Text>
-        <Input name="venue_id" control={control} /> */}
         <View style={{ marginBottom: 40 }}>
           <Button title="submit" onPress={handleSubmit(onSubmit)} />
         </View>
