@@ -83,3 +83,16 @@ export const gigsByGenre = (genre) => {
       console.log(err);
     });
 };
+
+export const sendReminder = (body) => {
+  return amazonApi
+    .post(`/send-email`, body, {
+      headers: { "X-API-KEY": API_TOKEN },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};

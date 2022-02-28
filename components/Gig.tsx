@@ -7,10 +7,13 @@ import {
   Dimensions,
   Linking,
   Image,
+  Pressable,
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { getSingleGig } from "../utils/api";
+import { getSingleGig, sendReminder, getGigsByVenue } from "../utils/api";
 import { FontAwesome } from "@expo/vector-icons";
+import { Auth } from "aws-amplify";
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 const image = {
@@ -21,8 +24,12 @@ interface Props {
 }
 
 const Gig: FC<Props> = ({ route }) => {
+  const [userEmail, setUserEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [wasPressed, setWasPressed] = useState(false);
   const navigation = useNavigation();
-  const { id } = route.params;
+  const { id, venue_id } = route.params;
+
   const [gig, setGig] = useState({
     bandName: "",
     date: "",
@@ -35,6 +42,34 @@ const Gig: FC<Props> = ({ route }) => {
     big_url: "www.image.com",
     small_url: "",
   });
+
+  Auth.currentUserInfo().then((userInfo) => {
+    setUserEmail(userInfo.attributes.email);
+    setUsername(userInfo.username);
+  });
+
+  const email = {
+    to: `${userEmail}`,
+    from: "j.souttar@gmail.com",
+    subject: "Reminder About Upcoming Gig",
+    text: `Hi ${username}, 
+    
+    You have asked us to send you are reminder regarding an upcoming live music event at ${venue_id},
+    here are the details of the gig:
+
+    Date: ${gig.date}
+
+    Band Name: ${gig.bandName}
+
+    Description: ${gig.description}
+    
+    Genre: ${gig.genre}
+
+    Best Wishes,
+    The Team at Herd
+    `,
+  };
+
   useEffect(() => {
     getSingleGig(id).then((res) => {
       setGig(res);
@@ -43,6 +78,15 @@ const Gig: FC<Props> = ({ route }) => {
   const handleUserPress = () => {
     navigation.navigate("Home");
   };
+
+  const reminderEmailOnSubmit = () => {
+    Alert.alert("Reminder Email Sent!", "A reminder email is on its way!", [
+      { text: "OK" },
+    ]);
+    setWasPressed(true);
+    return sendReminder(email);
+  };
+
   return (
     <ImageBackground source={image} style={styles.imgBackground}>
       <View style={styles.BackButton}>
@@ -56,7 +100,9 @@ const Gig: FC<Props> = ({ route }) => {
         <Text style={styles.GigText}>{gig.date}</Text>
         <Text style={styles.GigText}>{gig.description}</Text>
         <Text style={styles.GigText}>{gig.genre}</Text>
-        <Text style={styles.GigText}>{gig.start}PM - {gig.end}PM</Text>
+        <Text style={styles.GigText}>
+          {gig.start}PM - {gig.end}PM
+        </Text>
         <Text style={styles.GigText}>£{gig.price}</Text>
         <FontAwesome
           name="spotify"
@@ -66,6 +112,15 @@ const Gig: FC<Props> = ({ route }) => {
             Linking.openURL(gig.spotify);
           }}
         />
+        <View>
+          <Pressable
+            onPress={() => reminderEmailOnSubmit()}
+            disabled={wasPressed ? true : false}
+            style={wasPressed ? styles.disabledButton : styles.button}
+          >
+            <Text style={styles.gigText}>Send Reminder Email</Text>
+          </Pressable>
+        </View>
       </View>
     </ImageBackground>
   );
@@ -88,6 +143,28 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: height,
     width: width,
+  },
+  button: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 32,
+    borderRadius: 20,
+    elevation: 3,
+    borderColor: "white",
+    borderWidth: 1,
+    backgroundColor: "black",
+  },
+  disabledButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingVertical: 5,
+    paddingHorizontal: 32,
+    borderRadius: 20,
+    elevation: 3,
+    borderColor: "white",
+    borderWidth: 1,
+    backgroundColor: "grey",
   },
   BackButton: {
     height: 50,
@@ -113,19 +190,24 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "#fff",
-    marginTop: 10
+    marginTop: 10,
   },
   GigText: {
     color: "#fff",
     padding: 10,
     fontWeight: "bold",
   },
-
+  gigText: {
+    color: "#fff",
+    fontSize: 18,
+    opacity: 1,
+    fontWeight: "bold",
+  },
   bigImg: {
     marginTop: 10,
     height: 200,
     width: 200,
-    borderRadius: 15
+    borderRadius: 15,
   },
 });
 

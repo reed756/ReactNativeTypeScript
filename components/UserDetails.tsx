@@ -14,7 +14,6 @@ import {
 } from "react-native";
 import { Avatar } from "react-native-elements";
 import { Input } from "react-native-elements/dist/input/Input";
-import { CognitoUserAttribute } from "amazon-cognito-identity-js";
 const { width } = Dimensions.get("window");
 const { height } = Dimensions.get("window");
 const image = {
@@ -87,9 +86,7 @@ const UserDetails = () => {
               onChangeText={(newPhoto) => setUserPhotoSubmit(newPhoto)}
             ></Input>
             <View style={styles.submit}>
-              <Text onPress={handleUserPhoto}>
-                Submit
-              </Text>
+              <Text onPress={handleUserPhoto}>Submit</Text>
             </View>
           </View>
         ) : null}
