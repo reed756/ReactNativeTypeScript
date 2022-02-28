@@ -5,13 +5,19 @@ import {
   Pressable,
   FlatList,
   Dimensions,
+  ImageBackground,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
 import { getVenues, getGigsByVenue, getGigs, gigsByGenre } from "../utils/api";
 import { useEffect, useState } from "react";
+
+const image = {
+  uri: "https://cdn.pixabay.com/photo/2015/11/22/19/04/crowd-1056764_960_720.jpg",
+};
 const { width } = Dimensions.get("window");
+const { height } = Dimensions.get("window");
 
 const Filter = () => {
   const [gigs, setGigs] = useState([]);
@@ -66,27 +72,29 @@ const Filter = () => {
     />
   );
   return (
-    <FlatList
-      data={gigs}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.id}
-      ListHeaderComponent={
-        <View>
-          <Picker
-            selectedValue={selectedValue}
-            style={{ height: 200, width: width }}
-            onValueChange={(itemValue, itemIndex) =>
-              setSelectedValue(itemValue)
-            }
-          >
-            <Picker.Item label="Rock" value="Rock" />
-            <Picker.Item label="Pop" value="Pop" />
-            <Picker.Item label="Electronic" value="Electronic" />
-            <Picker.Item label="Metal" value="Metal" />
-          </Picker>
-        </View>
-      }
-    />
+    <ImageBackground source={image} style={styles.imgBackground}>
+      <FlatList
+        data={gigs}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        ListHeaderComponent={
+          <View>
+            <Picker
+              selectedValue={selectedValue}
+              style={styles.picker}
+              onValueChange={(itemValue, itemIndex) =>
+                setSelectedValue(itemValue)
+              }
+            >
+              <Picker.Item label="Rock" value="Rock" />
+              <Picker.Item label="Pop" value="Pop" />
+              <Picker.Item label="Electronic" value="Electronic" />
+              <Picker.Item label="Metal" value="Metal" />
+            </Picker>
+          </View>
+        }
+      />
+    </ImageBackground>
   );
 };
 const styles = StyleSheet.create({
@@ -98,6 +106,21 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
   },
+  picker: {
+    width: 300,
+    marginTop: 35,
+    backgroundColor: "white",
+    color: "white",
+    height: 100,
+    borderWidth: 2,
+    borderColor: "white",
+    opacity: 0.5,
+    borderRadius: 25,
+    alignSelf: "center",
+    paddingBottom: 200,
+    paddingTop: 0,
+  },
+
   venName: {
     fontWeight: "bold",
   },
@@ -126,6 +149,12 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 1,
     backgroundColor: "grey",
+  },
+  imgBackground: {
+    alignItems: "center",
+    justifyContent: "center",
+    height: height,
+    width: width,
   },
   button: {
     alignItems: "center",

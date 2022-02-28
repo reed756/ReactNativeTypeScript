@@ -66,7 +66,7 @@ const Map: FC = () => {
       setGigs(res);
     });
     getGigs().then((res: any) => {
-      console.log(res);
+      // console.log(res);
     });
   }, [venueId]);
 
@@ -136,12 +136,7 @@ const Map: FC = () => {
             <Pressable style={styles.button} onPress={() => goToLondon()}>
               <Text style={styles.gigText}>Re-center</Text>
             </Pressable>
-            <Pressable
-              style={styles.button}
-              onPress={() => navigation.navigate("Filter")}
-            >
-              <Text style={styles.gigText}>Filter</Text>
-            </Pressable>
+
             <Pressable
               disabled={!currVenue ? true : false}
               style={!currVenue ? styles.disabledButton : styles.button}
@@ -158,11 +153,6 @@ const Map: FC = () => {
             <Text style={styles.gigHeading}>UPCOMING GIGS:</Text>
             <Text style={styles.gigHeading}>{currVenue}</Text>
           </View>
-          {shouldShow ? (
-            <View style={styles.mapButtonsFilter}>
-              <Text onPress={() => navigation.navigate("Filter")}>Rock</Text>
-            </View>
-          ) : null}
         </>
       }
     />
@@ -184,7 +174,6 @@ const styles = StyleSheet.create({
     fontStyle: "italic",
   },
   callout: {
-    // position: "relative"
     flex: 1,
     width: width - 150,
   },
@@ -211,7 +200,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     paddingVertical: 5,
-    paddingHorizontal: 20,
+    paddingHorizontal: 32,
     borderRadius: 20,
     elevation: 3,
     borderColor: "white",
@@ -228,7 +217,6 @@ const styles = StyleSheet.create({
   marker: {
     height: 50,
     width: 50,
-    // borderRadius: 20,
   },
   mapButtons: {
     position: "absolute",
@@ -258,7 +246,6 @@ const styles = StyleSheet.create({
   },
   map: {
     width: width - 20,
-
     height: 440,
     borderTopRightRadius: 50,
     borderRadius: 10,
@@ -288,7 +275,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 18,
     opacity: 1,
-    margin: 5,
+    marginTop: 7,
+    margin: 7,
+
     fontWeight: "900",
     alignSelf: "center",
   },
