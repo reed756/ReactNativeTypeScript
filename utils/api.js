@@ -71,9 +71,9 @@ export const postGig = (id, body) => {
     });
 };
 
-export const gigsByGenre = () => {
+export const gigsByGenre = (genre) => {
   return amazonApi
-    .get(`/query-genre/Rock`, {
+    .get(`/query-genre/${genre}`, {
       headers: { "X-API-KEY": API_TOKEN },
     })
     .then((res) => {
