@@ -1,22 +1,32 @@
-import { View, Text, StyleSheet, Pressable, FlatList } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Pressable,
+  FlatList,
+  Dimensions,
+} from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { getVenues, getGigsByVenue, getGigs, gigsByGenre} from "../utils/api";
+import { getVenues, getGigsByVenue, getGigs, gigsByGenre } from "../utils/api";
 import { useEffect, useState } from "react";
+const { width } = Dimensions.get("window");
 
 const Filter = () => {
   const [gigs, setGigs] = useState([]);
+  const [selectedValue, setSelectedValue] = useState("Rock");
   const navigation: any = useNavigation();
   const handleUserPress = (id: number) => {
     navigation.navigate("Gig", { id: id });
   };
 
   useEffect(() => {
-    gigsByGenre().then((res: any) => {
+    gigsByGenre(selectedValue).then((res: any) => {
       console.log(res.data, "<<<<<");
       setGigs(res.data);
     });
-  }, []);
+  }, [selectedValue]);
 
   const Item = ({
     bandName,
@@ -60,6 +70,22 @@ const Filter = () => {
       data={gigs}
       renderItem={renderItem}
       keyExtractor={(item) => item.id}
+      ListHeaderComponent={
+        <View>
+          <Picker
+            selectedValue={selectedValue}
+            style={{ height: 200, width: width }}
+            onValueChange={(itemValue, itemIndex) =>
+              setSelectedValue(itemValue)
+            }
+          >
+            <Picker.Item label="Rock" value="Rock" />
+            <Picker.Item label="Pop" value="Pop" />
+            <Picker.Item label="Electronic" value="Electronic" />
+            <Picker.Item label="Metal" value="Metal" />
+          </Picker>
+        </View>
+      }
     />
   );
 };
