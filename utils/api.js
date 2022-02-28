@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_TOKEN } from "@env";
+import { a } from "aws-amplify";
 
 const amazonApi = axios.create({
   baseURL: "https://9nqt242jla.execute-api.eu-west-2.amazonaws.com/dev",
@@ -64,6 +65,19 @@ export const postGig = (id, body) => {
     })
     .then((res) => {
       return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const gigsByGenre = () => {
+  return amazonApi
+    .get(`/query-genre/Rock`, {
+      headers: { "X-API-KEY": API_TOKEN },
+    })
+    .then((res) => {
+      return res;
     })
     .catch((err) => {
       console.log(err);
