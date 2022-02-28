@@ -25,7 +25,7 @@ const Map: FC = () => {
   const [currVenue, setCurrVenue] = useState("");
 
   const handleUserPress = (id: number) => {
-    navigation.navigate("Gig", { id: id });
+    navigation.navigate("Gig", { id: id, venue_id: currVenue });
   };
 
   const [shouldShow, setShouldShow] = useState(false);
