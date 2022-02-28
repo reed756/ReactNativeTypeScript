@@ -27,6 +27,10 @@ const Filter = () => {
     navigation.navigate("Gig", { id: id });
   };
 
+  const handleBackPress = () => {
+    navigation.navigate("Home");
+  };
+
   useEffect(() => {
     gigsByGenre(selectedValue).then((res: any) => {
       console.log(res.data, "<<<<<");
@@ -78,20 +82,31 @@ const Filter = () => {
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={
-          <View>
-            <Picker
-              selectedValue={selectedValue}
-              style={styles.picker}
-              onValueChange={(itemValue, itemIndex) =>
-                setSelectedValue(itemValue)
-              }
-            >
-              <Picker.Item label="Rock" value="Rock" />
-              <Picker.Item label="Pop" value="Pop" />
-              <Picker.Item label="Electronic" value="Electronic" />
-              <Picker.Item label="Metal" value="Metal" />
-            </Picker>
-          </View>
+          <>
+            <View style={styles.BackButton}>
+              <Text style={styles.BackButtonText} onPress={handleBackPress}>
+                Back
+              </Text>
+            </View>
+
+            <View>
+              <Picker
+                selectedValue={selectedValue}
+                style={styles.picker}
+                onValueChange={(itemValue, itemIndex) =>
+                  setSelectedValue(itemValue)
+                }
+              >
+                <Picker.Item label="Rock" value="Rock" />
+                <Picker.Item label="Pop" value="Pop" />
+                <Picker.Item label="Electronic" value="Electronic" />
+                <Picker.Item label="Metal" value="Metal" />
+                <Picker.Item label="Indie" value="Indie" />
+                <Picker.Item label="Hip Hop" value="Hip-Hop" />
+                <Picker.Item label="Punk" value="Punk" />
+              </Picker>
+            </View>
+          </>
         }
       />
     </ImageBackground>
@@ -249,6 +264,27 @@ const styles = StyleSheet.create({
     width: 100,
     borderRadius: 15,
     alignSelf: "center",
+  },
+  BackButton: {
+    height: 50,
+    width: 50,
+    // marginBottom: 670,
+    marginTop: 50,
+    marginRight: 290,
+    borderRadius: 15,
+    backgroundColor: "black",
+    borderColor: "white",
+    borderWidth: 1,
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+  },
+  BackButtonText: {
+    color: "white",
+    alignContent: "center",
+    justifyContent: "center",
+    alignSelf: "center",
+    fontWeight: "bold",
   },
 });
 export default Filter;
