@@ -31,7 +31,7 @@ function Input({ name, control }: { name: any; control: any }) {
       style={styles.input}
       value={field.value}
       onChangeText={field.onChange}
-      placeholder={name}
+      // placeholder={name}
     />
   );
 }
@@ -89,23 +89,23 @@ const AddGig: FC<Props> = ({ route }) => {
       <ScrollView style={styles.container}>
         <Text style={styles.formText}>Band Name: </Text>
         <Input name="bandName" control={control} />
-        <Text style={styles.formText}>Gig's date: </Text>
+        <Text style={styles.formText}>Date of Gig: </Text>
         <Input name="date" control={control} />
-        <Text style={styles.formText}>Band's description: </Text>
+        <Text style={styles.formText}>Band Description: </Text>
         <Input name="description" control={control} />
-        <Text style={styles.formText}>Gig's end time: </Text>
-        <Input name="end" control={control} />
-        <Text style={styles.formText}>Gig's start time: </Text>
+        <Text style={styles.formText}>Gig Start Time: </Text>
         <Input name="start" control={control} />
-        <Text style={styles.formText}>Band's genre: </Text>
+        <Text style={styles.formText}>Gig End Time: </Text>
+        <Input name="end" control={control} />
+        <Text style={styles.formText}>Band's Genre: </Text>
         <Input name="genre" control={control} />
-        <Text style={styles.formText}>Band's small url: </Text>
+        <Text style={styles.formText}>Link to Small Image: </Text>
         <Input name="small_url" control={control} />
-        <Text style={styles.formText}>Band's big url: </Text>
+        <Text style={styles.formText}>Link to Big Image: </Text>
         <Input name="big_url" control={control} />
-        <Text style={styles.formText}>Spotify link: </Text>
+        <Text style={styles.formText}>Spotify Link: </Text>
         <Input name="spotify" control={control} />
-        <Text style={styles.formText}>Price of gig: </Text>
+        <Text style={styles.formText}>Gig Price: </Text>
         <Input name="price" control={control} />
         <View style={{ marginBottom: 40 }}>
           <Button title="submit" onPress={handleSubmit(onSubmit)} />
@@ -119,7 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     paddingTop: 20,
     borderRadius: 25,
-    height: 550,
+    height: 600,
     width: 340,
     position: "absolute",
     opacity: 0.85,
@@ -156,14 +156,16 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontWeight: "bold",
     alignSelf: "center",
-    marginBottom: 5,
+    textAlign: "center",
+    textAlignVertical: "center",
   },
   formTextInput: {
     alignItems: "center",
     backgroundColor: "white",
-    borderRadius: 20,
     textAlign: "center",
+    textAlignVertical: "center",
     borderColor: "white",
+    alignContent: "center",
   },
   submitButtonText: {
     color: "white",
@@ -176,9 +178,14 @@ const styles = StyleSheet.create({
   input: {
     paddingHorizontal: 10,
     height: 40,
+    borderRadius: 10,
     margin: 12,
     borderWidth: 1,
     backgroundColor: "white",
+    alignContent: "center",
+    alignSelf: "center",
+    width: 300,
+    textAlign: "center",
   },
 });
 export default AddGig;

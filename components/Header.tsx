@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Dimensions } from "react-native";
 const { width } = Dimensions.get("window");
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 
 const Header = () => {
   const [user, setUser] = useState("");
@@ -15,10 +16,21 @@ const Header = () => {
     navigation.navigate("UserDetails");
   };
 
+  const handleUserPressFilter = () => {
+    navigation.navigate("Filter");
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerText}>Herd</Text>
+        <Entypo
+          name="folder-music"
+          size={30}
+          color="white"
+          style={styles.icon}
+          onPress={handleUserPressFilter}
+        />
         <FontAwesome
           name="user-circle"
           size={30}
@@ -32,7 +44,6 @@ const Header = () => {
 };
 const styles = StyleSheet.create({
   container: {
-    // backgroundColor: "#000",
     alignItems: "center",
     justifyContent: "center",
     width: width,
