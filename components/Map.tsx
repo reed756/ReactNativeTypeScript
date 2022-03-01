@@ -16,19 +16,20 @@ import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
 import { Input } from "react-native-elements";
 
-const Map: FC = () => {
+type Props = {
+  [key: string]: any;
+};
+
+const Map: FC = ({ region }: Props) => {
   const [venues, setVenues] = useState([]);
   const [gigs, setGigs] = useState([]);
   const [venueId, setVenueId] = useState(11);
   const mapRef: any = useRef(null);
   const navigation: any = useNavigation();
   const [currVenue, setCurrVenue] = useState("");
-
   const handleUserPress = (id: number) => {
     navigation.navigate("Gig", { id: id, venue_id: currVenue });
   };
-
-  const [shouldShow, setShouldShow] = useState(false);
 
   const Item = ({
     bandName,
@@ -70,14 +71,8 @@ const Map: FC = () => {
     });
   }, [venueId]);
 
-  const londonRegion = {
-    latitude: 51.49307,
-    longitude: -0.22559,
-    latitudeDelta: 0.01,
-    longitudeDelta: 0.01,
-  };
   const goToLondon = () => {
-    mapRef.current.animateToRegion(londonRegion, 3 * 1000);
+    mapRef.current.animateToRegion(region, 3 * 1000);
   };
 
   const renderItem = ({ item }: { item: any }) => (
@@ -99,7 +94,7 @@ const Map: FC = () => {
       keyExtractor={(item) => item.id}
       ListHeaderComponent={
         <>
-          <MapView style={styles.map} initialRegion={londonRegion} ref={mapRef}>
+          <MapView style={styles.map} initialRegion={region} ref={mapRef}>
             {venues.map((venue: any) => {
               return (
                 <Marker
@@ -295,4 +290,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Map;
+export default Map as any;
