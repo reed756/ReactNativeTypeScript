@@ -78,8 +78,12 @@ const Gig: FC<Props> = ({ route }) => {
     });
     setIsLoading((prevState) => !prevState);
   }, []);
+
   const handleUserPress = () => {
     navigation.navigate("Home");
+  };
+  const handleChatPress = () => {
+    navigation.navigate("Messages");
   };
 
   const reminderEmailOnSubmit = () => {
@@ -128,6 +132,11 @@ const Gig: FC<Props> = ({ route }) => {
                 style={wasPressed ? styles.disabledButton : styles.button}
               >
                 <Text style={styles.gigText}>Send Reminder Email</Text>
+              </Pressable>
+            </View>
+            <View>
+              <Pressable onPress={handleChatPress} style={styles.button}>
+                <Text style={styles.gigText}>Open Chat</Text>
               </Pressable>
             </View>
           </>

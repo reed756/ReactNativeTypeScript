@@ -4,6 +4,7 @@ export type RootStackParamList = {
   UserDetails: any;
   AddUserPic: any;
   Filter: any;
+  Messages: any;
 };
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
