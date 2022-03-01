@@ -6,6 +6,7 @@ import {
   FlatList,
   Dimensions,
   ImageBackground,
+  ActivityIndicator,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import React from "react";
@@ -22,6 +23,7 @@ const { height } = Dimensions.get("window");
 const Filter = () => {
   const [gigs, setGigs] = useState([]);
   const [selectedValue, setSelectedValue] = useState("Rock");
+  const [isLoading, setIsLoading] = useState(true);
   const navigation: any = useNavigation();
   const handleUserPress = (id: number) => {
     navigation.navigate("Gig", { id: id });
@@ -33,9 +35,9 @@ const Filter = () => {
 
   useEffect(() => {
     gigsByGenre(selectedValue).then((res: any) => {
-      console.log(res.data, "<<<<<");
       setGigs(res.data);
     });
+    setIsLoading((prevState) => !prevState);
   }, [selectedValue]);
 
   const Item = ({
@@ -77,38 +79,42 @@ const Filter = () => {
   );
   return (
     <ImageBackground source={image} style={styles.imgBackground}>
-      <FlatList
-        data={gigs}
-        renderItem={renderItem}
-        keyExtractor={(item) => item.id}
-        ListHeaderComponent={
-          <>
-            <View style={styles.BackButton}>
-              <Text style={styles.BackButtonText} onPress={handleBackPress}>
-                Back
-              </Text>
-            </View>
+      {isLoading ? (
+        <ActivityIndicator size={"large"} color="red" />
+      ) : (
+        <FlatList
+          data={gigs}
+          renderItem={renderItem}
+          keyExtractor={(item) => item.id}
+          ListHeaderComponent={
+            <>
+              <View style={styles.BackButton}>
+                <Text style={styles.BackButtonText} onPress={handleBackPress}>
+                  Back
+                </Text>
+              </View>
 
-            <View>
-              <Picker
-                selectedValue={selectedValue}
-                style={styles.picker}
-                onValueChange={(itemValue, itemIndex) =>
-                  setSelectedValue(itemValue)
-                }
-              >
-                <Picker.Item label="Rock" value="Rock" />
-                <Picker.Item label="Pop" value="Pop" />
-                <Picker.Item label="Electronic" value="Electronic" />
-                <Picker.Item label="Metal" value="Metal" />
-                <Picker.Item label="Indie" value="Indie" />
-                <Picker.Item label="Hip Hop" value="Hip-Hop" />
-                <Picker.Item label="Punk" value="Punk" />
-              </Picker>
-            </View>
-          </>
-        }
-      />
+              <View>
+                <Picker
+                  selectedValue={selectedValue}
+                  style={styles.picker}
+                  onValueChange={(itemValue, itemIndex) =>
+                    setSelectedValue(itemValue)
+                  }
+                >
+                  <Picker.Item label="Rock" value="Rock" />
+                  <Picker.Item label="Pop" value="Pop" />
+                  <Picker.Item label="Electronic" value="Electronic" />
+                  <Picker.Item label="Metal" value="Metal" />
+                  <Picker.Item label="Indie" value="Indie" />
+                  <Picker.Item label="Hip Hop" value="Hip-Hop" />
+                  <Picker.Item label="Punk" value="Punk" />
+                </Picker>
+              </View>
+            </>
+          }
+        />
+      )}
     </ImageBackground>
   );
 };

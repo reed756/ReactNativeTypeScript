@@ -9,6 +9,7 @@ import {
   Image,
   Pressable,
   Alert,
+  ActivityIndicator,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { getSingleGig, sendReminder, getGigsByVenue } from "../utils/api";
@@ -26,6 +27,7 @@ interface Props {
 const Gig: FC<Props> = ({ route }) => {
   const [userEmail, setUserEmail] = useState("");
   const [username, setUsername] = useState("");
+  const [isLoading, setIsLoading] = useState(true);
   const [wasPressed, setWasPressed] = useState(false);
   const navigation = useNavigation();
   const { id, venue_id } = route.params;
@@ -74,6 +76,7 @@ const Gig: FC<Props> = ({ route }) => {
     getSingleGig(id).then((res) => {
       setGig(res);
     });
+    setIsLoading((prevState) => !prevState);
   }, []);
   const handleUserPress = () => {
     navigation.navigate("Home");
@@ -95,32 +98,40 @@ const Gig: FC<Props> = ({ route }) => {
         </Text>
       </View>
       <View style={styles.container}>
-        <Text style={styles.GigTitle}>{gig.bandName}</Text>
-        <Image source={{ uri: gig.big_url }} style={styles.bigImg}></Image>
-        <Text style={styles.GigText}>{gig.date}</Text>
-        <Text style={styles.GigText}>{gig.description}</Text>
-        <Text style={styles.GigText}>{gig.genre}</Text>
-        <Text style={styles.GigText}>
-          {gig.start}PM - {gig.end}PM
-        </Text>
-        <Text style={styles.GigText}>£{gig.price}</Text>
-        <FontAwesome
-          name="spotify"
-          size={30}
-          color="white"
-          onPress={() => {
-            Linking.openURL(gig.spotify);
-          }}
-        />
-        <View>
-          <Pressable
-            onPress={() => reminderEmailOnSubmit()}
-            disabled={wasPressed ? true : false}
-            style={wasPressed ? styles.disabledButton : styles.button}
-          >
-            <Text style={styles.gigText}>Send Reminder Email</Text>
-          </Pressable>
-        </View>
+        {isLoading ? (
+          <View style={styles.loadingIcon}>
+            <ActivityIndicator size="large" color="#ffffff" />
+          </View>
+        ) : (
+          <>
+            <Text style={styles.GigTitle}>{gig.bandName}</Text>
+            <Image source={{ uri: gig.big_url }} style={styles.bigImg}></Image>
+            <Text style={styles.GigText}>{gig.date}</Text>
+            <Text style={styles.GigText}>{gig.description}</Text>
+            <Text style={styles.GigText}>{gig.genre}</Text>
+            <Text style={styles.GigText}>
+              {gig.start}PM - {gig.end}PM
+            </Text>
+            <Text style={styles.GigText}>£{gig.price}</Text>
+            <FontAwesome
+              name="spotify"
+              size={30}
+              color="white"
+              onPress={() => {
+                Linking.openURL(gig.spotify);
+              }}
+            />
+            <View>
+              <Pressable
+                onPress={() => reminderEmailOnSubmit()}
+                disabled={wasPressed ? true : false}
+                style={wasPressed ? styles.disabledButton : styles.button}
+              >
+                <Text style={styles.gigText}>Send Reminder Email</Text>
+              </Pressable>
+            </View>
+          </>
+        )}
       </View>
     </ImageBackground>
   );
@@ -208,6 +219,11 @@ const styles = StyleSheet.create({
     height: 200,
     width: 200,
     borderRadius: 15,
+  },
+  loadingIcon: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
 

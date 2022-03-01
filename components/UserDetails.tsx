@@ -31,7 +31,6 @@ const UserDetails = () => {
   const [shouldShow, setShouldShow] = useState(false);
 
   Auth.currentUserInfo().then((userInfo) => {
-    console.log(userInfo.customAttributes);
     setUser(userInfo.username);
     setUserEmail(userInfo.attributes.email);
     setUserPhone(userInfo.attributes.phone_number);
