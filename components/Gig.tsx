@@ -143,7 +143,7 @@ const Gig: FC<Props> = ({ route }) => {
                 disabled={wasPressed ? true : false}
                 style={wasPressed ? styles.disabledButton : styles.button}
               >
-                <Text style={styles.gigText}>Comment</Text>
+                <Text style={styles.gigText}>Gig Message Board</Text>
               </Pressable>
             </View>
           </>

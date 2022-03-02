@@ -1,4 +1,5 @@
 import React, { useEffect, useState, FC } from "react";
+import { Feather } from "@expo/vector-icons";
 import {
   StyleSheet,
   Text,
@@ -76,10 +77,15 @@ const Comments: FC<Props> = ({ route }) => {
   }) => (
     <View style={styles.message}>
       <Pressable onPress={() => {}}>
-        <Text style={styles.text}>{date}</Text>
-        <Text style={styles.text}>{username}</Text>
+        <View style={styles.nameDate}>
+          <Text style={styles.textTop}>@{username}</Text>
+          <Text style={styles.textTop}>03-03-2022</Text>
+        </View>
         <Text style={styles.text}>{body}</Text>
-        <Text style={styles.text}>{votes}</Text>
+        <View style={styles.upvote}>
+          <Feather name="arrow-up-circle" size={24} color="black" />
+          <Text style={styles.textVotes}>{votes}</Text>
+        </View>
       </Pressable>
     </View>
   );
@@ -117,24 +123,22 @@ const Comments: FC<Props> = ({ route }) => {
         </Text>
       </View>
       <View style={styles.container}>
+        <View style={styles.messageInput}>
+          <TextInput
+            style={styles.TextInput}
+            placeholder="Type your message..."
+            onChangeText={handleChange}
+          ></TextInput>
+          <Pressable style={styles.text} onPress={handlePress}>
+            <Text style={styles.button}>SEND</Text>
+          </Pressable>
+        </View>
         <FlatList
           data={messages}
           renderItem={renderItem}
           keyExtractor={(item: any) => item.id}
-          ListHeaderComponent={
-            <>
-              <View>
-                <TextInput
-                  style={styles.TextInput}
-                  placeholder="type something in"
-                  onChangeText={handleChange}
-                ></TextInput>
-                <Pressable style={styles.text} onPress={handlePress}>
-                  <Text style={styles.button}>SEND</Text>
-                </Pressable>
-              </View>
-            </>
-          }
+          ListHeaderComponent={<></>}
+          style={styles.flatlist}
         />
       </View>
     </ImageBackground>
@@ -167,15 +171,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   TextInput: {
-    backgroundColor: "grey",
-    color: "#fff",
+    backgroundColor: "white",
+    color: "#000",
     padding: 10,
     fontWeight: "bold",
+    borderRadius: 15,
+    textAlign: "center",
+    width: 260,
+    height: 35,
   },
   BackButton: {
     height: 50,
     width: 50,
-    // marginTop: 50,
     marginBottom: 670,
     marginRight: 290,
     borderRadius: 15,
@@ -186,21 +193,62 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignSelf: "center",
   },
+  messageInput: {
+    position: "absolute",
+    marginTop: 500,
+  },
   text: {
-    color: "#fff",
+    color: "#000",
     padding: 10,
     fontWeight: "bold",
+  },
+  flatlist: {
+    position: "absolute",
+    marginTop: 10,
+  },
+  textVotes: {
+    color: "#000",
+    // padding: 10,
+    paddingBottom: 3,
+    fontWeight: "bold",
+    alignContent: "center",
+  },
+  upvote: {
+    alignItems: "flex-end",
+    marginBottom: 5,
+    paddingRight: 10,
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    alignContent: "center"
+  },
+  textTop: {
+    color: "#000",
+    padding: 10,
+    fontWeight: "bold",
+  },
+  nameDate: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
   button: {
     color: "#fff",
     padding: 10,
     fontWeight: "bold",
     borderColor: "white",
+    borderRadius: 15,
     borderWidth: 2,
+    width: 70,
+    textAlign: "center",
+    alignSelf: "center",
   },
   message: {
     borderColor: "white",
     borderWidth: 2,
+    width: 300,
+    borderRadius: 25,
+    backgroundColor: "white",
+    opacity: 0.85,
+    marginBottom: 15,
   },
 });
 
