@@ -27,7 +27,7 @@ interface Props {
 const Gig: FC<Props> = ({ route }) => {
   const [userEmail, setUserEmail] = useState("");
   const [username, setUsername] = useState("");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [wasPressed, setWasPressed] = useState(false);
   const navigation = useNavigation();
   const { id, venue_id } = route.params;
@@ -43,6 +43,7 @@ const Gig: FC<Props> = ({ route }) => {
     spotify: "",
     big_url: "www.image.com",
     small_url: "",
+    venue_id: "",
   });
 
   Auth.currentUserInfo().then((userInfo) => {
@@ -73,13 +74,19 @@ const Gig: FC<Props> = ({ route }) => {
   };
 
   useEffect(() => {
+    setIsLoading((prevState) => !prevState);
     getSingleGig(id).then((res) => {
       setGig(res);
+      setIsLoading((prevState) => !prevState);
     });
-    setIsLoading((prevState) => !prevState);
   }, []);
   const handleUserPress = () => {
     navigation.navigate("Home");
+  };
+  const comment = () => {
+    if (gig.venue_id) {
+      navigation.navigate("Comments", { venue_id: gig.venue_id });
+    }
   };
 
   const reminderEmailOnSubmit = () => {
@@ -128,6 +135,15 @@ const Gig: FC<Props> = ({ route }) => {
                 style={wasPressed ? styles.disabledButton : styles.button}
               >
                 <Text style={styles.gigText}>Send Reminder Email</Text>
+              </Pressable>
+            </View>
+            <View>
+              <Pressable
+                onPress={() => comment()}
+                disabled={wasPressed ? true : false}
+                style={wasPressed ? styles.disabledButton : styles.button}
+              >
+                <Text style={styles.gigText}>Comment</Text>
               </Pressable>
             </View>
           </>

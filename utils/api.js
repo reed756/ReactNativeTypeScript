@@ -96,3 +96,17 @@ export const sendReminder = (body) => {
       console.log(err);
     });
 };
+
+export const getCommentsByGig = (venue_id) => {
+  return amazonApi
+    .get(`/query-comments/${venue_id}`, {
+      headers: { "X-API-KEY": API_TOKEN },
+    })
+    .then((res) => {
+      console.log(res);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
