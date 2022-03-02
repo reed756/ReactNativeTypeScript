@@ -103,7 +103,32 @@ export const getCommentsByGig = (venue_id) => {
       headers: { "X-API-KEY": API_TOKEN },
     })
     .then((res) => {
-      console.log(res);
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const postCommentsByGig = (comment_id, body) => {
+  return amazonApi
+    .post(`/create-comment/${comment_id}`, body, {
+      headers: { "X-API-KEY": API_TOKEN },
+    })
+    .then((res) => {
+      return res.data;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+export const deleteCommentsById = (comment_id) => {
+  return amazonApi
+    .delete(`/delete-comments/${comment_id}`, {
+      headers: { "X-API-KEY": API_TOKEN },
+    })
+    .then((res) => {
       return res.data;
     })
     .catch((err) => {
