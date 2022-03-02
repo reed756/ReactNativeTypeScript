@@ -158,12 +158,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#000",
     alignItems: "center",
     borderRadius: 25,
-    height: 600,
+    height: 670,
     width: 340,
     position: "absolute",
     opacity: 0.85,
     borderColor: "white",
     borderWidth: 2,
+    top: 100,
+    justifyContent: "center"
+    // marginTop: 650
+    
   },
   imgBackground: {
     alignItems: "center",
@@ -181,6 +185,9 @@ const styles = StyleSheet.create({
     borderColor: "white",
     borderWidth: 1,
     backgroundColor: "black",
+    marginTop: 10,
+    marginBottom: 5,
+
   },
   disabledButton: {
     alignItems: "center",

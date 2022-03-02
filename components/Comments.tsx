@@ -56,12 +56,15 @@ const Comments: FC<Props> = ({ route }) => {
             </Text>
           );
         })}
-      </View>
-      <View>
-        <TextInput style={styles.text}>Please type in here</TextInput>
-        <Pressable style={styles.text}>
-          <Text>Send</Text>
-        </Pressable>
+        <View>
+          <TextInput
+            style={styles.text}
+            placeholder={"Please type in here"}
+          ></TextInput>
+          <Pressable style={styles.text}>
+            <Text>Send</Text>
+          </Pressable>
+        </View>
       </View>
     </ImageBackground>
   );
