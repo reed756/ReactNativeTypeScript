@@ -23,7 +23,7 @@ const { height } = Dimensions.get("window");
 const Filter = () => {
   const [gigs, setGigs] = useState([]);
   const [selectedValue, setSelectedValue] = useState("Rock");
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const navigation: any = useNavigation();
   const handleUserPress = (id: number) => {
     navigation.navigate("Gig", { id: id });
@@ -34,10 +34,11 @@ const Filter = () => {
   };
 
   useEffect(() => {
+    setIsLoading((prevState) => !prevState);
     gigsByGenre(selectedValue).then((res: any) => {
       setGigs(res.data);
+      setIsLoading((prevState) => !prevState);
     });
-    setIsLoading((prevState) => !prevState);
   }, [selectedValue]);
 
   const Item = ({
@@ -77,6 +78,7 @@ const Filter = () => {
       big_url={item.big_url}
     />
   );
+
   return (
     <ImageBackground source={image} style={styles.imgBackground}>
       {isLoading ? (
