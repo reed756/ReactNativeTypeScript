@@ -82,7 +82,7 @@ const Filter = () => {
   return (
     <ImageBackground source={image} style={styles.imgBackground}>
       {isLoading ? (
-        <ActivityIndicator size={"large"} color="red" />
+        <ActivityIndicator size={"large"} color="white" />
       ) : (
         <FlatList
           data={gigs}
