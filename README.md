@@ -22,9 +22,15 @@ It is also advisable to install a mobile emulator, the one used predoinantly for
 ```bash
 npm i
 ```
+
 ```bash
 npm install expo-cli
 ```
 
+## Minimum Requirements
+
+Please use Node version v17.0.1 to run this project.
+
 ## License
+
 [MIT](https://choosealicense.com/licenses/mit/)
